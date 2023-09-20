@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->string('document')->unique();
-            $table->string('name');
-            $table->string('phone_number');
-            $table->string('email')->unique();
-            $table->string('password')->nullable();
+        Schema::create('sales_log', function (Blueprint $table) {
+            $table->id("log_id");
+            $table->unsignedBigInteger("product_id");
+            $table->foreign("product_id")->references("product_id")->on("products")->onDelete("cascade");
+            $table->string("status");
+            $table->Integer("delivery_time");
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('sales_log');
     }
 };
