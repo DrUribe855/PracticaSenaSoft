@@ -15,8 +15,6 @@ return new class extends Migration
     {
         Schema::create('stores', function (Blueprint $table) {
             $table->id("store_id");
-            $table->string("user_id");
-            $table->foreign("user_id")->references("document")->on("users")->onDelete("cascade");
             $table->string("store_name");
             $table->string("address");
             $table->boolean("status");

@@ -5,20 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class UserStore extends Model
 {
     use HasFactory;
 
-    public $table = "orders";
+    public $table = "user_stores";
     protected $fillable = [
-        'order_id',
+        'document',
         'store_id',
-        'product_id',
-        'total',
+        'status',
     ];
 
-    public function order_product(){
-        return $this->hasMany(OrderProduct::class, "order_id");
+    public function user(){
+        return $this->belongsTo(User::class, "document");
     }
 
     public function store(){

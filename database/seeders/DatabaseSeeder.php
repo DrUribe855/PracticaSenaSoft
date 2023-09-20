@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
+use \App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,7 +20,7 @@ class DatabaseSeeder extends Seeder
         $document = 108800;
         $phone_number = 3217076300;
         for ($i=0; $i < 10; $i++) { 
-            \App\Models\User::factory()->create([
+            User::insert([
                 'document' => $document++,
                 'name' => $faker->firstName(),
                 'phone_number' => $phone_number++,

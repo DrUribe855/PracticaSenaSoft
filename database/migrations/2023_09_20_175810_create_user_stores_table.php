@@ -13,15 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
-            $table->id("order_id");
+        Schema::create('user_stores', function (Blueprint $table) {
+            $table->id("id");
+            $table->string("document");
             $table->unsignedBigInteger("store_id");
-            $table->unsignedBigInteger("product_id");
-            $table->float("total",8,2);
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
 
+            $table->foreign("document")->references("document")->on("users")->onDelete("cascade");
             $table->foreign("store_id")->references("store_id")->on("stores")->onDelete("cascade");
-            $table->foreign("product_id")->references("product_id")->on("products")->onDelete("cascade");
         });
     }
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('user_stores');
     }
 };
