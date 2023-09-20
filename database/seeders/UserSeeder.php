@@ -21,7 +21,7 @@ class User extends Seeder
             \App\Models\User::factory()->create([
                 'document' => $document++,
                 'name' => $faker->firstName(),
-                'phone_number' => $phone_number = $phone_number + 2,
+                'phone_number' => $phone_number++,
                 'email' => $faker->unique()->safeEmail,
                 'password' => $faker->asciify('*******#!')
             ]);
