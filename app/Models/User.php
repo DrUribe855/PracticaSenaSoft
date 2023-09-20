@@ -13,10 +13,10 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     public $table = "users";
-    protected fillable = array("*");
+    protected $fillable = array("*");
 
     public function stores(){
-        return this->belongsToMany(Store::class, "stores");
+        return $this->belongsToMany(Store::class, "stores");
     }
 
 }

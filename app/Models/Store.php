@@ -10,9 +10,9 @@ class Store extends Model
     use HasFactory;
 
     public $table = "stores";
-    protected fillable = array("*");
+    protected $fillable = array("*");
 
     public function orders(){
-        return this->belongsToMany(Order::class, "orders");
+        return $this->belongsToMany(Order::class, "orders");
     }
 }
