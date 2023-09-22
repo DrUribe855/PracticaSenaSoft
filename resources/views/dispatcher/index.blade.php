@@ -8,7 +8,7 @@
 
 @section('content')
     <div id="app">
-        <dispatcher></dispatcher>
+        <store></store>
     </div>
 @stop
 
