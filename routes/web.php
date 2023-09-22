@@ -14,4 +14,6 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::get('/', [LoginController::class, 'index' ]);
+// Route::get('/', [LoginController::class, 'index' ]);
+
+Route::get('/', [ DispatcherController::class, 'index' ]);
