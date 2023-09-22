@@ -6,8 +6,7 @@ use Illuminate\Http\Request;
 
 class DispatcherController extends Controller
 {
-    public function index()
-    {
+    public function index(){
         return view('dispatcher/index');
     }
 
@@ -16,8 +15,7 @@ class DispatcherController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(){
         //
     }
 

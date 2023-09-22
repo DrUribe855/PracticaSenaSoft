@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DispatcherController;
+use App\Http\Controllers\StoreController;
+use App\Http\Controllers\OrderController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +21,6 @@ use App\Http\Controllers\DispatcherController;
 // Route::get('/', [LoginController::class, 'index' ]);
 
 Route::get('/', [ DispatcherController::class, 'index' ]);
+Route::get('/Store/index', [ StoreController::class, 'index' ]);
+Route::get('/Store/generalShow', [ StoreController::class, 'generalShow' ]);
+Route::get('/Orders/index', [ OrderController::class, 'index' ]);

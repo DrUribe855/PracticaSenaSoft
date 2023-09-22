@@ -17,7 +17,7 @@ class Store extends Model
         'status',
     ];
 
-    public function store(){
+    public function order(){
         return $this->hasMany(Order::class, "store_id");
     }
 }
