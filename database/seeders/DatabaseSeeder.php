@@ -38,12 +38,13 @@ class DatabaseSeeder extends Seeder
         $phone_number = 3217076300;
         for ($i=0; $i < 10; $i++) { 
             User::insert([
-                'document' => $document++,
+                'document' => $document,
                 'name' => $faker->firstName(),
                 'phone_number' => $phone_number++,
                 'email' => $faker->unique()->safeEmail,
-                'password' => $faker->asciify('*******#!')
+                'password' => bcrypt($document),
             ]);
+            $document++;
         }
     }
 
@@ -61,9 +62,9 @@ class DatabaseSeeder extends Seeder
     public function faker_user_store(){
         for ($i=0; $i < 10; $i++) { 
             $store_id = rand(1,10);
-            $document = rand(108800,108809);
+            $document = rand(1,10);
             UserStore::insert([
-                'document' => $document,
+                'user_id' => $document,
                 'store_id' => $store_id,
             ]);
         }
@@ -84,10 +85,8 @@ class DatabaseSeeder extends Seeder
     public function faker_order(){
         for ($i=0; $i < 10; $i++) {
             $store_id = rand(1,10);
-            $product_id = rand(1,10); 
             Order::insert([
                 'store_id' => $store_id,
-                'product_id' => $product_id,
                 'total' => 10000,
             ]);
         } 

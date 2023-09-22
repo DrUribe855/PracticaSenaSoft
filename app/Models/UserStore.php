@@ -11,13 +11,13 @@ class UserStore extends Model
 
     public $table = "user_stores";
     protected $fillable = [
-        'document',
+        'user_id',
         'store_id',
         'status',
     ];
 
     public function user(){
-        return $this->belongsTo(User::class, "document");
+        return $this->belongsTo(User::class, "user_id");
     }
 
     public function store(){

@@ -22,7 +22,7 @@ class User extends Authenticatable
     ];
 
     public function user_store(){
-        return $this->hasMany(UserStore::class, "document");
+        return $this->hasMany(UserStore::class, "user_id");
     }
 
 }

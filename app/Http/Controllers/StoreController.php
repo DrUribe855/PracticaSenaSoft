@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Store;
+use App\Models\Order;
 
 class StoreController extends Controller {
     
@@ -36,7 +37,8 @@ class StoreController extends Controller {
     }
 
     public function generalShow(){
-        $records = Store::with('order')->select('*')->get();
+        $records = Store::with('order.order_product.product')->get();
+
 
         $data = [
                     'status' => true,
