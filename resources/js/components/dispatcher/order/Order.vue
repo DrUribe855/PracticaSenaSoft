@@ -10,6 +10,7 @@
 						<th class="bg-primary text-light col-4 text-center">TOTAL</th>
 						<th class="bg-primary text-light col-2 text-center">ESTADO</th>
 						<th class="bg-primary text-light col-1 text-center"></th>
+						<th class="bg-primary text-light col-1 text-center"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -21,9 +22,14 @@
 						<td class="text-center p-1">
 							<button class="btn btn-outline-primary px-2 p-1" @click="store_detail(order.store, order.store.order)" data-bs-toggle="modal" data-bs-target="#exampleModal"> Detalle </button>
 						</td>
+						<td class="text-center p-1">
+							<button class="btn btn-outline-danger px-2 p-1" data-bs-toggle="modal" data-bs-target="#edit"> Estado </button>
+						</td>
 					</tr>
 				</tbody>
 			</table>
+
+			<!-- Info view modal -->
 			<div v-if="visibilityOrders" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -55,6 +61,36 @@
 									</div>
 								</div>
 							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Edit view modal -->
+			<div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="mb-3">
+							<label for="id" class="form-label">id</label>
+							<input type="" class="form-control" id="id" aria-describedby="emailHelp" disabled>
+						</div>
+						<div class="mb-3">
+							<label for="store_name" class="form-label">Nombre Tienda</label>
+							<input type="" class="form-control" id="store_name" aria-describedby="emailHelp" disabled>
+						</div>
+						<div class="mb-3">
+							<label for="status" class="form-label">Estado</label>
+							<input type="" class="form-control" id="status" aria-describedby="emailHelp" disabled>
+						</div>
+					</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+							<button type="button" class="btn btn-primary">Aceptar</button>
 						</div>
 					</div>
 				</div>

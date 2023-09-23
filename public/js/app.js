@@ -2383,6 +2383,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -20895,6 +20931,8 @@ var render = function () {
                         [_vm._v(" Detalle ")]
                       ),
                     ]),
+                    _vm._v(" "),
+                    _vm._m(1, true),
                   ])
                 }),
                 0
@@ -20916,7 +20954,7 @@ var render = function () {
                   [
                     _c("div", { staticClass: "modal-dialog" }, [
                       _c("div", { staticClass: "modal-content" }, [
-                        _vm._m(1),
+                        _vm._m(2),
                         _vm._v(" "),
                         _c("div", { staticClass: "modal-body" }, [
                           _c(
@@ -21071,6 +21109,8 @@ var render = function () {
                   ]
                 )
               : _vm._e(),
+            _vm._v(" "),
+            _vm._m(3),
           ])
         : _vm._e(),
       _vm._v(" "),
@@ -21105,7 +21145,24 @@ var staticRenderFns = [
         ]),
         _vm._v(" "),
         _c("th", { staticClass: "bg-primary text-light col-1 text-center" }),
+        _vm._v(" "),
+        _c("th", { staticClass: "bg-primary text-light col-1 text-center" }),
       ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "text-center p-1" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-danger px-2 p-1",
+          attrs: { "data-bs-toggle": "modal", "data-bs-target": "#edit" },
+        },
+        [_vm._v(" Estado ")]
+      ),
     ])
   },
   function () {
@@ -21128,6 +21185,121 @@ var staticRenderFns = [
         },
       }),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "edit",
+          tabindex: "-1",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true",
+        },
+      },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header" }, [
+              _c(
+                "h1",
+                {
+                  staticClass: "modal-title fs-5",
+                  attrs: { id: "exampleModalLabel" },
+                },
+                [_vm._v("Modal title")]
+              ),
+              _vm._v(" "),
+              _c("button", {
+                staticClass: "btn-close",
+                attrs: {
+                  type: "button",
+                  "data-bs-dismiss": "modal",
+                  "aria-label": "Close",
+                },
+              }),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("div", { staticClass: "mb-3" }, [
+                _c(
+                  "label",
+                  { staticClass: "form-label", attrs: { for: "id" } },
+                  [_vm._v("id")]
+                ),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "",
+                    id: "id",
+                    "aria-describedby": "emailHelp",
+                    disabled: "",
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3" }, [
+                _c(
+                  "label",
+                  { staticClass: "form-label", attrs: { for: "store_name" } },
+                  [_vm._v("Nombre Tienda")]
+                ),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "",
+                    id: "store_name",
+                    "aria-describedby": "emailHelp",
+                    disabled: "",
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3" }, [
+                _c(
+                  "label",
+                  { staticClass: "form-label", attrs: { for: "status" } },
+                  [_vm._v("Estado")]
+                ),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "",
+                    id: "status",
+                    "aria-describedby": "emailHelp",
+                    disabled: "",
+                  },
+                }),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-danger",
+                  attrs: { type: "button", "data-bs-dismiss": "modal" },
+                },
+                [_vm._v("Cancelar")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "btn btn-primary", attrs: { type: "button" } },
+                [_vm._v("Aceptar")]
+              ),
+            ]),
+          ]),
+        ]),
+      ]
+    )
   },
 ]
 render._withStripped = true
