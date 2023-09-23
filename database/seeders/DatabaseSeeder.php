@@ -96,10 +96,11 @@ class DatabaseSeeder extends Seeder
         for ($i=0; $i < 10; $i++) { 
             $order_id = rand(1,10);
             $product_id = rand(1,10);
+            $quantity = rand(100, 200);
             OrderProduct::insert([
                 'order_id' => $order_id,
                 'product_id' => $product_id,
-                'quantity' => 100,
+                'quantity' => $quantity,
             ]);
         }
     }

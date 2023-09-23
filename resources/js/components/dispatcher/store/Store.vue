@@ -1,7 +1,6 @@
 <template>
 	<div>
 		<div class="col-12 m-0 pt-3 row">
-
 	    	<div v-if="visibilityStore" class="col-12 m-0 p-0 row">
 		    	<div class="col-12 col-sm-6 col-lg-4 m-0 p-2" v-for="store in store_list">
 		    		<div class="col card h-100 m-0">
@@ -25,7 +24,6 @@
 		            </div>
 		        </div>
 		    </div>
-
 		    <detail-store v-if="!visibilityStore" :store="selected_store" ></detail-store>
 	    </div>
 	</div>

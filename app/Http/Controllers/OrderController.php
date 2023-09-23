@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Order;
 
 class OrderController extends Controller {
     
@@ -32,6 +33,17 @@ class OrderController extends Controller {
 
     public function destroy($id){
         //
+    }
+
+    public function generalShow(){
+        $records = Order::with('store.order.order_product.product')->get();
+
+        $data = [
+                    'status' => true,
+                    'order' => $records, 
+                ];
+
+        return response()->json( $data );
     }
 
 }

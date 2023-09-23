@@ -25,11 +25,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="orden in selected_order">
-						<td class="text-center p-1">{{ orden.id }}</td>
-						<td class="text-center p-1">{{ orden.total }}</td>
-						<td class="text-center p-1">{{ orden.status }}</td>
-						<td class="text-center p-1">{{ orden.order_product.length }}</td>
+					<tr v-for="order in selected_order">
+						<td class="text-center p-1">{{ order.id }}</td>
+						<td class="text-center p-1">{{ order.total }}</td>
+						<td class="text-center p-1">{{ order.status }}</td>
+						<td class="text-center p-1">{{ order.order_product.length }}</td>
 						<td class="text-center p-1">
 							<button class="btn btn-primary px-2 p-1"> Det. </button>
 						</td>
