@@ -2283,13 +2283,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['store'],
@@ -2297,6 +2290,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       selected_order: [],
       selected_store: {},
+      list_product: [],
       detail_product: {}
     };
   },
@@ -2304,8 +2298,8 @@ __webpack_require__.r(__webpack_exports__);
     this.selected_order = this.store.order, this.selected_store = this.store;
   },
   methods: {
-    detailProduct: function detailProduct(detail_product) {
-      this.detail_product = detail_product, console.log(detail_product.product);
+    detailProduct: function detailProduct(list_product) {
+      this.list_product = list_product, console.log(this.list_product);
     }
   }
 });
@@ -20644,62 +20638,121 @@ var render = function () {
           },
         },
         [
-          _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-dialog modal-lg" }, [
             _c("div", { staticClass: "modal-content" }, [
               _vm._m(1),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
-                _c("div", { staticClass: "flex justify-content-center row" }, [
-                  _c("div", { staticClass: "col-12 col-sm-10 m-0 p-2" }, [
-                    _c("div", { staticClass: "col card h-100 m-0" }, [
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "card-body" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "d-flex justify-content-center align-items-center mt-2 mb-3",
-                            staticStyle: { position: "relative" },
-                          },
-                          [
+                _c(
+                  "div",
+                  {
+                    class: [
+                      {
+                        "col-12 m-0 pt-3 row flex justify-content-center":
+                          _vm.list_product.length == 1,
+                        "col-12 m-0 pt-3 row": _vm.list_product.length > 1,
+                      },
+                    ],
+                  },
+                  _vm._l(_vm.list_product, function (product_data) {
+                    return _c(
+                      "div",
+                      { staticClass: "col-12 col-sm-6 m-0 p-2 shadow-lg" },
+                      [
+                        _c("div", { staticClass: "col card h-100 m-0" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "card-header d-flex align-items-center justify-content-between pb-0",
+                            },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "col-12 card-title mb-0" },
+                                [
+                                  _c(
+                                    "h5",
+                                    {
+                                      staticClass:
+                                        "mb-3 me-2 text-dark text-uppercase text-center",
+                                    },
+                                    [
+                                      _c("b", [
+                                        _vm._v(
+                                          _vm._s(
+                                            product_data.product.product_name
+                                          )
+                                        ),
+                                      ]),
+                                    ]
+                                  ),
+                                  _vm._v(" \n\t\t\t\t\t\t\t\t\t\t\t\tEstado: "),
+                                  _c(
+                                    "small",
+                                    {
+                                      class: [
+                                        {
+                                          "text-primary":
+                                            product_data.product.status == 1,
+                                          "text-danger":
+                                            product_data.product.status != 1,
+                                        },
+                                      ],
+                                    },
+                                    [
+                                      _c("b", [
+                                        _vm._v(
+                                          _vm._s(
+                                            product_data.product.status == 1
+                                              ? "ACTIVO"
+                                              : "INACTIVO"
+                                          )
+                                        ),
+                                      ]),
+                                    ]
+                                  ),
+                                ]
+                              ),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "card-body" }, [
                             _c(
                               "div",
                               {
                                 staticClass:
-                                  "d-flex flex-column align-items-center",
+                                  "d-flex justify-content-center align-items-center mt-2 mb-3",
+                                staticStyle: { position: "relative" },
                               },
                               [
-                                _c("h2", { staticClass: "mb-0" }, [
-                                  _vm._v(" " + _vm._s() + " "),
-                                ]),
-                                _vm._v(" "),
-                                _c("span", [_vm._v("Precio")]),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "d-flex flex-column align-items-center",
+                                  },
+                                  [
+                                    _c("h2", { staticClass: "mb-0" }, [
+                                      _vm._v(
+                                        " " +
+                                          _vm._s(product_data.quantity) +
+                                          " "
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("Total Productos")]),
+                                  ]
+                                ),
                               ]
                             ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "d-flex flex-column align-items-center",
-                              },
-                              [
-                                _c("h2", { staticClass: "mb-0" }, [
-                                  _vm._v(" " + _vm._s() + " "),
-                                ]),
-                                _vm._v(" "),
-                                _c("span"),
-                              ]
-                            ),
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _vm._m(3),
-                      ]),
-                    ]),
-                  ]),
-                ]),
+                          ]),
+                        ]),
+                      ]
+                    )
+                  }),
+                  0
+                ),
               ]),
             ]),
           ]),
@@ -20743,7 +20796,7 @@ var staticRenderFns = [
       _c(
         "h1",
         { staticClass: "modal-title fs-5", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Información del producto")]
+        [_vm._v("Detalle del producto que se pidio")]
       ),
       _vm._v(" "),
       _c("button", {
@@ -20755,29 +20808,6 @@ var staticRenderFns = [
         },
       }),
     ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "card-header d-flex align-items-center justify-content-between pb-0",
-      },
-      [_c("div", { staticClass: "col-12 card-title mb-0" })]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "col-12 m-0 p-0 row justify-content-end" },
-      [_c("button", { staticClass: "btn btn-info" }, [_vm._v("SELECCIONAR")])]
-    )
   },
 ]
 render._withStripped = true

@@ -84,7 +84,6 @@
 		methods: {
 			getOrder(){
 				axios.get('generalShow').then(res => {
-					
 					console.log("Respuesta del servidor: ");
 					console.log(res);
 					this.order_list = res.data.order;
