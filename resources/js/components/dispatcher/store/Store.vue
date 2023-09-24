@@ -50,8 +50,8 @@
 			getStores(){
 				axios.get('generalShow').then(res => {
 					
-					console.log("Respuesta del servidor: ");
-					console.log(res);
+					// console.log("Respuesta del servidor: ");
+					// console.log(res);
 					this.store_list = res.data.stores;
 
 					this.selected_store = this.store_list[0];
