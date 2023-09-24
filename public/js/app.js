@@ -2496,7 +2496,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       selected_store: {},
       selected_order: [],
-      visibilityOrder: false
+      order_product: [],
+      visibilityOrder: false,
+      myModal: {}
     };
   },
   created: function created() {
@@ -2504,12 +2506,25 @@ __webpack_require__.r(__webpack_exports__);
     this.selected_order = this.store.order;
   },
   methods: {
-    selectOrder: function selectOrder(order) {
+    openOrderModal: function openOrderModal(order) {
       var _this = this;
+      this.order_product = order.order_product;
+      this.visibilityOrder = true;
       setTimeout(function () {
-        _this.visibilityOrder = true;
-      }, 2000);
-      this.selected_order = this.selected_order.order_product;
+        _this.myModal = new bootstrap.Modal(document.getElementById('modalStoreOrder'), {
+          keyboard: false,
+          backdrop: 'static'
+        });
+        _this.myModal.show();
+      }, 200);
+    },
+    closeOrderModal: function closeOrderModal() {
+      var _this2 = this;
+      this.myModal.hide();
+      setTimeout(function () {
+        _this2.order_product = {};
+        _this2.visibilityOrder = false;
+      }, 200);
     }
   }
 });
@@ -2546,19 +2561,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['selected_order'],
+  props: ['order_product'],
   components: {},
   data: function data() {
     return {
-      products: []
+      order_item: []
     };
   },
   created: function created() {
-    this.products = this.products;
+    this.order_item = this.order_product;
   },
-  methods: {}
+  methods: {
+    formatCurrency: function formatCurrency(amount) {
+      // Formatear el número como moneda en pesos colombianos
+      return amount.toLocaleString("es-CO", {
+        style: "currency",
+        currency: "COP"
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -21368,7 +21409,7 @@ var render = function () {
                       },
                       on: {
                         click: function ($event) {
-                          return _vm.selectOrder(_vm.store)
+                          return _vm.openOrderModal(order)
                         },
                       },
                     },
@@ -21382,7 +21423,7 @@ var render = function () {
         ]),
         _vm._v(" "),
         _vm.visibilityOrder
-          ? _c("modal-order", { attrs: { order: _vm.selected_order } })
+          ? _c("modal-order", { attrs: { order_product: _vm.order_product } })
           : _vm._e(),
       ],
       1
@@ -21434,18 +21475,95 @@ var render = function () {
   return _c(
     "div",
     {
-      directives: [
-        { name: "show", rawName: "v-show", value: true, expression: "true" },
-      ],
       staticClass: "modal fade",
       attrs: {
-        id: "exampleModal",
+        id: "modalStoreOrder",
         tabindex: "-1",
         "aria-labelledby": "exampleModalLabel",
         "aria-hidden": "true",
       },
     },
-    [_vm._m(0)]
+    [
+      _c("div", { staticClass: "modal-dialog" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _c("div", { staticClass: "modal-header" }, [
+            _c(
+              "h4",
+              {
+                staticClass: "modal-title fs-5",
+                attrs: { id: "exampleModalLabel" },
+              },
+              [_vm._v("PRODUCTOS DE LA ORDEN")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-secondary p-1 px-2",
+                attrs: { type: "button" },
+                on: {
+                  click: function ($event) {
+                    return _vm.$parent.closeOrderModal()
+                  },
+                },
+              },
+              [
+                _c("i", {
+                  staticClass: "fa fa-times",
+                  attrs: { "aria-hidden": "true" },
+                }),
+              ]
+            ),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _c("div", { staticClass: "col-12 m-0 p-0" }, [
+              _c("table", { staticClass: "table table-bordered" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.order_item, function (item) {
+                    return _c("tr", [
+                      _c("td", [_vm._v(_vm._s(item.product.product_name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(item.quantity))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          _vm._s(
+                            _vm.formatCurrency(
+                              item.quantity * item.product.price
+                            )
+                          )
+                        ),
+                      ]),
+                    ])
+                  }),
+                  0
+                ),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary",
+                attrs: { type: "button" },
+                on: {
+                  click: function ($event) {
+                    return _vm.$parent.closeOrderModal()
+                  },
+                },
+              },
+              [_vm._v("CERRAR")]
+            ),
+          ]),
+        ]),
+      ]),
+    ]
   )
 }
 var staticRenderFns = [
@@ -21453,48 +21571,13 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-dialog" }, [
-      _c("div", { staticClass: "modal-content" }, [
-        _c("div", { staticClass: "modal-header" }, [
-          _c(
-            "h1",
-            {
-              staticClass: "modal-title fs-5",
-              attrs: { id: "exampleModalLabel" },
-            },
-            [_vm._v("Modal title")]
-          ),
-          _vm._v(" "),
-          _c("button", {
-            staticClass: "btn-close",
-            attrs: {
-              type: "button",
-              "data-bs-dismiss": "modal",
-              "aria-label": "Close",
-            },
-          }),
-        ]),
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("NOMBRE")]),
         _vm._v(" "),
-        _c("div", { staticClass: "modal-body" }, [
-          _vm._v("\n        ...\n      \t"),
-        ]),
+        _c("th", [_vm._v("CANTIDAD")]),
         _vm._v(" "),
-        _c("div", { staticClass: "modal-footer" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-secondary",
-              attrs: { type: "button", "data-bs-dismiss": "modal" },
-            },
-            [_vm._v("Close")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            { staticClass: "btn btn-primary", attrs: { type: "button" } },
-            [_vm._v("Save changes")]
-          ),
-        ]),
+        _c("th", [_vm._v("SUBTOTAL")]),
       ]),
     ])
   },

@@ -31,12 +31,12 @@
 						<td class="text-center p-1">{{ order.status }}</td>
 						<td class="text-center p-1">{{ order.order_product.length }}</td>
 						<td class="text-center p-1">
-							<button class="btn btn-primary px-2 p-1" @click="selectOrder(store)" data-bs-toggle="modal" data-bs-target="#exampleModal"> Det. </button>
+							<button class="btn btn-primary px-2 p-1" @click="openOrderModal(order)" data-bs-toggle="modal" data-bs-target="#exampleModal"> Det. </button>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-			<modal-order v-if="visibilityOrder" :order="selected_order"></modal-order>
+			<modal-order v-if="visibilityOrder" :order_product="order_product"></modal-order>
     	</div>
     	
     </div>
@@ -53,7 +53,9 @@
 			return {
 				selected_store: {},
 				selected_order: [],
+				order_product: [],
 				visibilityOrder: false,
+				myModal: {},
 			}
 		},
 		created(){
@@ -61,11 +63,25 @@
 			this.selected_order = this.store.order;
 		},
 		methods: {
-			selectOrder(order){
+			openOrderModal(order){
+				this.order_product = order.order_product;
+				this.visibilityOrder = true;
+
 				setTimeout(() => {
-					this.visibilityOrder = true;
-				},2000);
-				this.selected_order = this.selected_order.order_product;
+					this.myModal = new bootstrap.Modal(document.getElementById('modalStoreOrder'), {
+					  keyboard: false,
+					  backdrop: 'static',
+					});
+					this.myModal.show();
+				},200);
+
+			},
+			closeOrderModal(){
+				this.myModal.hide();
+				setTimeout(() => {
+					this.order_product = {};
+					this.visibilityOrder = false;
+				},200);
 			}
 		},
 	}
