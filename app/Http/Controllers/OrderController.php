@@ -34,9 +34,13 @@ class OrderController extends Controller {
         $records = Order::find($id);
         $records->status = $request->input('status');
         $records->save();
+
+        $store = Store::with('order.order_product.product')->find( $records->store_id );
+
         $data = [
                     'status' => true,
                     'order' => $records,
+                    'store' => $store,
                 ];
 
         return response()->json( $data );

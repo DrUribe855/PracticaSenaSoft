@@ -2561,9 +2561,16 @@ __webpack_require__.r(__webpack_exports__);
         axios.put("".concat(this.order_status.id), this.order_status).then(function (res) {
           console.log("Respuesta del servidor: ");
           console.log(res);
-          _this2.selected_order = res.data.order;
           console.log(_this2.selected_order);
           $('#edit').modal('hide');
+
+          // Buscar la orden por id y 
+          // Modificar el estado en el Order List
+          var index = _.findIndex(_this2.order_list, function (o) {
+            return o.id == res.data.order.id;
+          });
+          _this2.order_list[index].status = res.data.order.status;
+          _this2.order_list[index].store = res.data.store;
         })["catch"](function (error) {
           console.log("Error en axios: ");
           console.log(error);

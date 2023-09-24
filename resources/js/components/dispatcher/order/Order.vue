@@ -246,9 +246,19 @@
 					axios.put(`${this.order_status.id}`, this.order_status).then(res => {
 						console.log("Respuesta del servidor: ");
 						console.log(res);
-						this.selected_order = res.data.order;
+						
+
 						console.log(this.selected_order);
 						$('#edit').modal('hide');
+
+						// Buscar la orden por id y 
+						// Modificar el estado en el Order List
+						var index = _.findIndex( this.order_list, function(o) { return o.id == res.data.order.id; });
+						this.order_list[index].status = res.data.order.status;
+                        this.order_list[index].store = res.data.store;
+
+
+
 					}).catch(error => {
 						console.log("Error en axios: ");
 						console.log( error );
