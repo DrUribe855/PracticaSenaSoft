@@ -2419,6 +2419,73 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2431,7 +2498,16 @@ __webpack_require__.r(__webpack_exports__);
       order_list: [],
       selected_order: {},
       orderZise: [],
-      visibilityOrders: true
+      visibilityOrders: true,
+      order_status: {},
+      store_name: {},
+      status: '',
+      store: '',
+      product_name: '',
+      product: [],
+      amount: '',
+      total: '',
+      store_list: []
     };
   },
   created: function created() {
@@ -2444,6 +2520,8 @@ __webpack_require__.r(__webpack_exports__);
         console.log("Respuesta del servidor: ");
         console.log(res);
         _this.order_list = res.data.order;
+        _this.product = res.data.product;
+        _this.store_list = res.data.store;
       })["catch"](function (error) {
         console.log("Error en axios: ");
         console.log(error);
@@ -2459,6 +2537,61 @@ __webpack_require__.r(__webpack_exports__);
     },
     goToBack: function goToBack() {
       this.visibilityOrders = true, this.selected_order = {};
+    },
+    edit_status: function edit_status(store, order) {
+      this.order_status = order, this.store_name = store;
+    },
+    confirm_status: function confirm_status(status) {
+      var _this2 = this;
+      if (status != null) {
+        if (this.order_status.status == 'pendiente' && status == '1') {
+          status = 'proceso';
+        } else if (this.order_status.status == 'pendiente' && status == '2') {
+          status = 'entregada';
+        } else if (this.order_status.status == 'proceso' && status == '1') {
+          status = 'pendiente';
+        } else if (this.order_status.status == 'proceso' && status == '2') {
+          status = 'entregada';
+        } else if (this.order_status.status == 'entregada' && status == '1') {
+          status = 'pendiente';
+        } else if (this.order_status.status == 'entregada' && status == '2') {
+          status = 'proceso';
+        }
+        this.order_status.status = status;
+        axios.put("".concat(this.order_status.id), this.order_status).then(function (res) {
+          console.log("Respuesta del servidor: ");
+          console.log(res);
+          _this2.selected_order = res.data.order;
+          console.log(_this2.selected_order);
+          $('#edit').modal('hide');
+        })["catch"](function (error) {
+          console.log("Error en axios: ");
+          console.log(error);
+          console.log(error.response);
+        });
+      } else {
+        console.log("Estado null");
+      }
+    },
+    register: function register() {
+      var store_name = this.store;
+      var product_name = this.product_name;
+      var amount = this.amount;
+      var total = this.total;
+      axios.post('store', {
+        store_name: store_name,
+        product_name: product_name,
+        amount: amount,
+        total: total
+      }).then(function (res) {
+        console.log("Respuesta del servidor");
+        console.log(res.data);
+        $('#register').modal('hide');
+      })["catch"](function (error) {
+        console.log("Error en axios");
+        console.log(error);
+        console.log(error.response);
+      });
     }
   }
 });
@@ -20874,10 +21007,10 @@ var render = function () {
     [
       _vm.visibilityOrders
         ? _c("div", [
-            _c("h4", [_vm._v("LISTA DE ORDENES")]),
+            _vm._m(0),
             _vm._v(" "),
             _c("table", { staticClass: "table table-bordered" }, [
-              _vm._m(0),
+              _vm._m(1),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -20932,7 +21065,24 @@ var render = function () {
                       ),
                     ]),
                     _vm._v(" "),
-                    _vm._m(1, true),
+                    _c("td", { staticClass: "text-center p-1" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-outline-danger px-2 p-1",
+                          attrs: {
+                            "data-bs-toggle": "modal",
+                            "data-bs-target": "#edit",
+                          },
+                          on: {
+                            click: function ($event) {
+                              return _vm.edit_status(order.store, order)
+                            },
+                          },
+                        },
+                        [_vm._v(" Estado ")]
+                      ),
+                    ]),
                   ])
                 }),
                 0
@@ -21110,7 +21260,367 @@ var render = function () {
                 )
               : _vm._e(),
             _vm._v(" "),
-            _vm._m(3),
+            _c(
+              "div",
+              {
+                staticClass: "modal fade",
+                attrs: {
+                  id: "edit",
+                  tabindex: "-1",
+                  "aria-labelledby": "exampleModalLabel",
+                  "aria-hidden": "true",
+                },
+              },
+              [
+                _c("div", { staticClass: "modal-dialog" }, [
+                  _c("div", { staticClass: "modal-content" }, [
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-body" }, [
+                      _c(
+                        "form",
+                        {
+                          on: {
+                            submit: function ($event) {
+                              $event.preventDefault()
+                              return _vm.confirm_status(_vm.status)
+                            },
+                          },
+                        },
+                        [
+                          _c("div", { staticClass: "mb-3 row" }, [
+                            _vm._m(4),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-11" }, [
+                              _c(
+                                "label",
+                                { staticClass: "font-weight-normal" },
+                                [
+                                  _vm._v(
+                                    " " + _vm._s(_vm.order_status.id) + " "
+                                  ),
+                                ]
+                              ),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "mb-3 row" }, [
+                            _vm._m(5),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-8 p-0" }, [
+                              _c(
+                                "label",
+                                { staticClass: "font-weight-normal" },
+                                [_vm._v(_vm._s(_vm.store_name.store_name))]
+                              ),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "mb-3 row" }, [
+                            _vm._m(6),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-10" }, [
+                              _c(
+                                "label",
+                                { staticClass: "font-weight-normal" },
+                                [_vm._v(_vm._s(_vm.order_status.status))]
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.status,
+                                    expression: "status",
+                                  },
+                                ],
+                                staticClass: "form-select",
+                                attrs: {
+                                  "aria-label": "Default select example",
+                                },
+                                on: {
+                                  change: function ($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call(
+                                        $event.target.options,
+                                        function (o) {
+                                          return o.selected
+                                        }
+                                      )
+                                      .map(function (o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.status = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  },
+                                },
+                              },
+                              [
+                                _c("option", { attrs: { value: "1" } }, [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.order_status.status == "pendiente"
+                                        ? "proceso"
+                                        : "pendiente"
+                                    )
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "2" } }, [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.order_status.status == "proceso"
+                                        ? "entregada"
+                                        : _vm.order_status.status == "entregada"
+                                        ? "proceso"
+                                        : "entregada"
+                                    )
+                                  ),
+                                ]),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "form-text",
+                                attrs: { id: "emailHelp" },
+                              },
+                              [_vm._v("Cambiar el estado de la orden.")]
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: { type: "submit" },
+                            },
+                            [_vm._v("Aceptar")]
+                          ),
+                        ]
+                      ),
+                    ]),
+                  ]),
+                ]),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "modal fade",
+                attrs: {
+                  id: "register",
+                  tabindex: "-1",
+                  "aria-labelledby": "exampleModalLabel",
+                  "aria-hidden": "true",
+                },
+              },
+              [
+                _c("div", { staticClass: "modal-dialog" }, [
+                  _c("div", { staticClass: "modal-content" }, [
+                    _vm._m(7),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-body" }, [
+                      _c(
+                        "form",
+                        {
+                          on: {
+                            submit: function ($event) {
+                              $event.preventDefault()
+                              return _vm.register()
+                            },
+                          },
+                        },
+                        [
+                          _c("div", [
+                            _c("div", { staticClass: "mb-3" }, [
+                              _c("label", { staticClass: "form-label" }, [
+                                _vm._v(" Nombre Tienda "),
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.store,
+                                      expression: "store",
+                                    },
+                                  ],
+                                  staticClass: "form-select",
+                                  attrs: {
+                                    "aria-label": "Default select example",
+                                  },
+                                  on: {
+                                    change: function ($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call(
+                                          $event.target.options,
+                                          function (o) {
+                                            return o.selected
+                                          }
+                                        )
+                                        .map(function (o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.store = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    },
+                                  },
+                                },
+                                [
+                                  _c("option", { attrs: { selected: "" } }, [
+                                    _vm._v("Seleccione el nombre de la tienda"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.store_list, function (store) {
+                                    return _c(
+                                      "option",
+                                      { domProps: { value: store.id } },
+                                      [_vm._v(_vm._s(store.store_name))]
+                                    )
+                                  }),
+                                ],
+                                2
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mb-3" }, [
+                              _c("label", { staticClass: "form-label" }, [
+                                _vm._v(" Nombre Producto "),
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.product_name,
+                                      expression: "product_name",
+                                    },
+                                  ],
+                                  staticClass: "form-select",
+                                  attrs: {
+                                    "aria-label": "Default select example",
+                                  },
+                                  on: {
+                                    change: function ($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call(
+                                          $event.target.options,
+                                          function (o) {
+                                            return o.selected
+                                          }
+                                        )
+                                        .map(function (o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.product_name = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    },
+                                  },
+                                },
+                                [
+                                  _c("option", { attrs: { selected: "" } }, [
+                                    _vm._v("Seleccione el nombre del producto"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.product, function (products) {
+                                    return _c(
+                                      "option",
+                                      { domProps: { value: products.id } },
+                                      [_vm._v(_vm._s(products.product_name))]
+                                    )
+                                  }),
+                                ],
+                                2
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mb-3" }, [
+                              _c("label", { staticClass: "form-label" }, [
+                                _vm._v(" Cantidad "),
+                              ]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.amount,
+                                    expression: "amount",
+                                  },
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "" },
+                                domProps: { value: _vm.amount },
+                                on: {
+                                  input: function ($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.amount = $event.target.value
+                                  },
+                                },
+                              }),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mb-3" }, [
+                              _c("label", { staticClass: "form-label" }, [
+                                _vm._v(" Total "),
+                              ]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.total,
+                                    expression: "total",
+                                  },
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "" },
+                                domProps: { value: _vm.total },
+                                on: {
+                                  input: function ($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.total = $event.target.value
+                                  },
+                                },
+                              }),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(8),
+                        ]
+                      ),
+                    ]),
+                  ]),
+                ]),
+              ]
+            ),
           ])
         : _vm._e(),
       _vm._v(" "),
@@ -21122,6 +21632,27 @@ var render = function () {
   )
 }
 var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row my-3" }, [
+      _c("div", { staticClass: "col-10" }, [
+        _c("h4", [_vm._v("LISTA DE ORDENES")]),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-2" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-success px-10 p-2",
+            attrs: { "data-bs-toggle": "modal", "data-bs-target": "#register" },
+          },
+          [_vm._v(" Registrar Orden ")]
+        ),
+      ]),
+    ])
+  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
@@ -21154,21 +21685,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "text-center p-1" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-outline-danger px-2 p-1",
-          attrs: { "data-bs-toggle": "modal", "data-bs-target": "#edit" },
-        },
-        [_vm._v(" Estado ")]
-      ),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
       _c(
         "h1",
@@ -21190,116 +21706,88 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "modal fade",
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h1",
+        { staticClass: "modal-title fs-5", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Cambiar estado")]
+      ),
+      _vm._v(" "),
+      _c("button", {
+        staticClass: "btn-close",
         attrs: {
-          id: "edit",
-          tabindex: "-1",
-          "aria-labelledby": "exampleModalLabel",
-          "aria-hidden": "true",
+          type: "button",
+          "data-bs-dismiss": "modal",
+          "aria-label": "Close",
         },
-      },
-      [
-        _c("div", { staticClass: "modal-dialog" }, [
-          _c("div", { staticClass: "modal-content" }, [
-            _c("div", { staticClass: "modal-header" }, [
-              _c(
-                "h1",
-                {
-                  staticClass: "modal-title fs-5",
-                  attrs: { id: "exampleModalLabel" },
-                },
-                [_vm._v("Modal title")]
-              ),
-              _vm._v(" "),
-              _c("button", {
-                staticClass: "btn-close",
-                attrs: {
-                  type: "button",
-                  "data-bs-dismiss": "modal",
-                  "aria-label": "Close",
-                },
-              }),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "modal-body" }, [
-              _c("div", { staticClass: "mb-3" }, [
-                _c(
-                  "label",
-                  { staticClass: "form-label", attrs: { for: "id" } },
-                  [_vm._v("id")]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "",
-                    id: "id",
-                    "aria-describedby": "emailHelp",
-                    disabled: "",
-                  },
-                }),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "mb-3" }, [
-                _c(
-                  "label",
-                  { staticClass: "form-label", attrs: { for: "store_name" } },
-                  [_vm._v("Nombre Tienda")]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "",
-                    id: "store_name",
-                    "aria-describedby": "emailHelp",
-                    disabled: "",
-                  },
-                }),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "mb-3" }, [
-                _c(
-                  "label",
-                  { staticClass: "form-label", attrs: { for: "status" } },
-                  [_vm._v("Estado")]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "",
-                    id: "status",
-                    "aria-describedby": "emailHelp",
-                    disabled: "",
-                  },
-                }),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "modal-footer" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-danger",
-                  attrs: { type: "button", "data-bs-dismiss": "modal" },
-                },
-                [_vm._v("Cancelar")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                { staticClass: "btn btn-primary", attrs: { type: "button" } },
-                [_vm._v("Aceptar")]
-              ),
-            ]),
-          ]),
-        ]),
-      ]
-    )
+      }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-1" }, [
+      _c("label", { staticClass: "form-label" }, [_vm._v("id:")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-4" }, [
+      _c("label", { staticClass: "form-label" }, [_vm._v("Nombre Tienda:")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-2" }, [
+      _c("label", { staticClass: "form-label" }, [_vm._v("Estado")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h1",
+        { staticClass: "modal-title fs-5", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Registrar Ordenes")]
+      ),
+      _vm._v(" "),
+      _c("button", {
+        staticClass: "btn-close",
+        attrs: {
+          type: "button",
+          "data-bs-dismiss": "modal",
+          "aria-label": "Close",
+        },
+      }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger",
+          attrs: { type: "button", "data-bs-dismiss": "modal" },
+        },
+        [_vm._v("Cancelar")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("Aceptar")]
+      ),
+    ])
   },
 ]
 render._withStripped = true

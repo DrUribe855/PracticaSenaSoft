@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\Store;
 
 class OrderController extends Controller {
     
@@ -16,7 +18,7 @@ class OrderController extends Controller {
     }
 
     public function store(Request $request){
-        //
+        return $request;
     }
 
     public function show($id){
@@ -24,11 +26,20 @@ class OrderController extends Controller {
     }
 
     public function edit($id){
-        //
+        
     }
 
     public function update(Request $request, $id){
-        //
+
+        $records = Order::find($id);
+        $records->status = $request->input('status');
+        $records->save();
+        $data = [
+                    'status' => true,
+                    'order' => $records,
+                ];
+
+        return response()->json( $data );
     }
 
     public function destroy($id){
@@ -37,10 +48,13 @@ class OrderController extends Controller {
 
     public function generalShow(){
         $records = Order::with('store.order.order_product.product')->get();
-
+        $products = Product::all();
+        $store = Store::all();
         $data = [
                     'status' => true,
-                    'order' => $records, 
+                    'order' => $records,
+                    'product' => $products, 
+                    'store' => $store,
                 ];
 
         return response()->json( $data );

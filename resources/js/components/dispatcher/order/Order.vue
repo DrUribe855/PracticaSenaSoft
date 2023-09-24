@@ -1,7 +1,14 @@
 <template>
     <div class="">
 		<div v-if="visibilityOrders">
-			<h4>LISTA DE ORDENES</h4>
+			<div class="row my-3">
+				<div class="col-10">
+					<h4>LISTA DE ORDENES</h4>
+				</div>
+				<div class="col-2">
+					<button class="btn btn-success px-10 p-2" data-bs-toggle="modal" data-bs-target="#register"> Registrar Orden </button>
+				</div>
+			</div>
 			<table class="table table-bordered">
 				<thead>
 					<tr>
@@ -23,7 +30,7 @@
 							<button class="btn btn-outline-primary px-2 p-1" @click="store_detail(order.store, order.store.order)" data-bs-toggle="modal" data-bs-target="#exampleModal"> Detalle </button>
 						</td>
 						<td class="text-center p-1">
-							<button class="btn btn-outline-danger px-2 p-1" data-bs-toggle="modal" data-bs-target="#edit"> Estado </button>
+							<button @click="edit_status(order.store, order)" class="btn btn-outline-danger px-2 p-1" data-bs-toggle="modal" data-bs-target="#edit"> Estado </button>
 						</td>
 					</tr>
 				</tbody>
@@ -70,27 +77,87 @@
 			<div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
-					<div class="modal-header">
-						<h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="exampleModalLabel">Cambiar estado</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<form @submit.prevent="confirm_status(status)" >
+								<div class="mb-3 row">
+									<div class="col-1">
+										<label class="form-label">id:</label>
+									</div>
+									<div class="col-11">
+										<label class="font-weight-normal"> {{ order_status.id }} </label>
+									</div>
+								</div>
+								<div class="mb-3 row">
+									<div class="col-4">
+										<label class="form-label">Nombre Tienda:</label>
+									</div>
+									<div class="col-8 p-0">
+										<label class="font-weight-normal">{{ store_name.store_name }}</label>
+									</div>
+								</div>
+								<div class="mb-3 row">
+									<div class="col-2">
+										<label class="form-label">Estado</label>
+									</div>
+									<div class="col-10">
+										<label class="font-weight-normal">{{ order_status.status }}</label>
+									</div>
+									<select v-model="status" class="form-select " aria-label="Default select example">
+										<option value="1">{{ (order_status.status=='pendiente')? 'proceso' : 'pendiente' }}</option>
+										<option value="2">{{ (order_status.status=='proceso')? 'entregada' : (order_status.status=='entregada')? 'proceso' : 'entregada'}}</option>
+									</select>
+									<div id="emailHelp" class="form-text">Cambiar el estado de la orden.</div>
+								</div>
+								<button type="submit" class="btn btn-primary">Aceptar</button>
+							</form>
+						</div>
 					</div>
-					<div class="modal-body">
-						<div class="mb-3">
-							<label for="id" class="form-label">id</label>
-							<input type="" class="form-control" id="id" aria-describedby="emailHelp" disabled>
+				</div>
+			</div>
+
+			<!-- Modal register -->
+			<div class="modal fade" id="register" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="exampleModalLabel">Registrar Ordenes</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
-						<div class="mb-3">
-							<label for="store_name" class="form-label">Nombre Tienda</label>
-							<input type="" class="form-control" id="store_name" aria-describedby="emailHelp" disabled>
-						</div>
-						<div class="mb-3">
-							<label for="status" class="form-label">Estado</label>
-							<input type="" class="form-control" id="status" aria-describedby="emailHelp" disabled>
-						</div>
-					</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-							<button type="button" class="btn btn-primary">Aceptar</button>
+						<div class="modal-body">
+							<form @submit.prevent="register()">
+								<div>
+									<div class="mb-3">
+										<label class="form-label"> Nombre Tienda </label>
+										<select v-model="store" class="form-select" aria-label="Default select example">
+											<option selected>Seleccione el nombre de la tienda</option>
+											<option v-for="store in store_list" :value="store.id">{{ store.store_name }}</option>
+										</select>
+									</div>
+									<div class="mb-3">
+										<label class="form-label"> Nombre Producto </label>
+										<select v-model="product_name" class="form-select" aria-label="Default select example">
+											<option selected>Seleccione el nombre del producto</option>
+											<option v-for="products in product" :value="products.id">{{ products.product_name }}</option>
+										</select>
+									</div>
+									<div class="mb-3">
+										<label class="form-label"> Cantidad </label>
+										<input type="" class="form-control" v-model="amount">
+									</div>
+									<div class="mb-3">
+										<label class="form-label"> Total </label>
+										<input type="" class="form-control" v-model="total">
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+									<button type="submit" class="btn btn-primary">Aceptar</button>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -111,7 +178,17 @@
 				order_list: [],
 				selected_order: {},
 				orderZise: [],
-				visibilityOrders: true
+				visibilityOrders: true,
+				order_status: {},
+				store_name: {},
+				status: '',
+				store: '',
+				product_name: '',
+				product: [],
+				amount: '',
+				total: '',
+				store_list: [],
+
 			}
 		},
 		created(){
@@ -123,7 +200,8 @@
 					console.log("Respuesta del servidor: ");
 					console.log(res);
 					this.order_list = res.data.order;
-
+					this.product = res.data.product;
+					this.store_list = res.data.store;
 				}).catch(error => {
 					
 					console.log("Error en axios: ");
@@ -143,6 +221,57 @@
 			goToBack(){
 				this.visibilityOrders = true,
 				this.selected_order = {}
+			},
+			edit_status(store, order){
+				this.order_status = order,
+				this.store_name = store
+			},
+			confirm_status(status){
+				if (status != null) {
+					if (this.order_status.status == 'pendiente' && status == '1') {
+					status = 'proceso';
+					}else if (this.order_status.status == 'pendiente' && status == '2'){
+						status = 'entregada';
+					}else if (this.order_status.status == 'proceso' && status == '1') {
+						status = 'pendiente';
+					}else if (this.order_status.status == 'proceso' && status == '2') {
+						status = 'entregada';
+					}else if (this.order_status.status == 'entregada' && status == '1') {
+						status = 'pendiente';
+					}else if (this.order_status.status == 'entregada' && status == '2') {
+						status = 'proceso';
+					}
+
+					this.order_status.status = status;
+					axios.put(`${this.order_status.id}`, this.order_status).then(res => {
+						console.log("Respuesta del servidor: ");
+						console.log(res);
+						this.selected_order = res.data.order;
+						console.log(this.selected_order);
+						$('#edit').modal('hide');
+					}).catch(error => {
+						console.log("Error en axios: ");
+						console.log( error );
+						console.log( error.response );
+					});
+				}else{
+					console.log("Estado null");
+				}
+			},
+			register(){
+				const store_name = this.store;
+				const product_name = this.product_name;
+				const amount = this.amount;
+				const total = this.total;
+				axios.post('store',{store_name,product_name,amount,total}).then(res => {
+					console.log("Respuesta del servidor");
+					console.log(res.data);
+					$('#register').modal('hide');
+				}).catch(error => {
+					console.log("Error en axios");
+					console.log( error );
+					console.log( error.response );
+				});
 			}
 		},
 	}

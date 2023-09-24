@@ -25,4 +25,5 @@ Route::get('/Store/index', [ StoreController::class, 'index' ]);
 Route::get('/Store/generalShow', [ StoreController::class, 'generalShow' ]);
 Route::get('/Orders/index', [ OrderController::class, 'index' ]);
 Route::get('/Orders/generalShow', [ OrderController::class, 'generalShow' ]);
-Route::get('/Orders/{id}/edit', [ OrderController::class, 'edit' ]);
+Route::put('/Orders/{id}', [ OrderController::class, 'update' ]);
+Route::post('/Order/store', [OrderController::class, 'store']);
