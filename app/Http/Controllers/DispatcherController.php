@@ -8,6 +8,7 @@ class DispatcherController extends Controller
 {
     public function index(){
         return view('dispatcher/store');
+    }
 
     public function create(){
         //

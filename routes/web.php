@@ -7,6 +7,7 @@ use App\Http\Controllers\DispatcherController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\OrderController;
 use App\Models\Order;
+use App\Models\Store;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,4 +25,5 @@ use App\Models\Order;
 Route::get('/', [ DispatcherController::class, 'index' ]);
 Route::get('/Store/index', [ StoreController::class, 'index' ]);
 Route::get('/Store/generalShow', [ StoreController::class, 'generalShow' ]);
+Route::post('/store', [StoreController::class, 'store']);
 
