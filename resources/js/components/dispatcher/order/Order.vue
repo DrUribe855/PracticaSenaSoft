@@ -132,14 +132,14 @@
 								<div>
 									<div class="mb-3">
 										<label class="form-label"> Nombre Tienda </label>
-										<select v-model="store" class="form-select" aria-label="Default select example">
+										<select v-model="store_id" class="form-select" aria-label="Default select example">
 											<option selected>Seleccione el nombre de la tienda</option>
 											<option v-for="store in store_list" :value="store.id">{{ store.store_name }}</option>
 										</select>
 									</div>
 									<div class="mb-3">
 										<label class="form-label"> Nombre Producto </label>
-										<select v-model="product_name" class="form-select" aria-label="Default select example">
+										<select v-model="product_id" class="form-select" aria-label="Default select example">
 											<option selected>Seleccione el nombre del producto</option>
 											<option v-for="products in product" :value="products.id">{{ products.product_name }}</option>
 										</select>
@@ -182,8 +182,8 @@
 				order_status: {},
 				store_name: {},
 				status: '',
-				store: '',
-				product_name: '',
+				store_id: '',
+				product_id: '',
 				product: [],
 				amount: '',
 				total: '',
@@ -269,20 +269,21 @@
 				}
 			},
 			register(){
-				const store_name = this.store;
-				const product_name = this.product_name;
+				const store_id = this.store_id;
+				const product_id = this.product_id;
 				const amount = this.amount;
 				const total = this.total;
-				axios.post('store',{store_name,product_name,amount,total}).then(res => {
+				axios.post('/Order/store', { store_id, product_id, amount, total }).then(res => {
 					console.log("Respuesta del servidor");
 					console.log(res.data);
+					this.order_list = res.data.order_list;
 					$('#register').modal('hide');
 				}).catch(error => {
 					console.log("Error en axios");
 					console.log( error );
 					console.log( error.response );
 				});
-			}
+			},
 		},
 	}
 </script>

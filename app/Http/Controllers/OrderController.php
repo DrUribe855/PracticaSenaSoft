@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Store;
+use App\Models\OrderProduct;
 
 class OrderController extends Controller {
     
@@ -18,7 +19,29 @@ class OrderController extends Controller {
     }
 
     public function store(Request $request){
-        return $request;
+        $order = new Order();
+        $order->store_id = $request->input('store_id');
+        $order->total = $request->input('total');
+        $order->save();
+
+        $order_id = $order->getKey();
+
+        $order_product = new OrderProduct();
+        $order_product->order_id = $order_id;
+        $order_product->product_id = $request->input('product_id');
+        $order_product->quantity = $request->input('amount');
+        $order_product->save();
+
+        $records = Order::with('store.order.order_product.product')->get();
+
+        $data = [
+            'status' => true,
+            'order' => $order,
+            'order_product' => $order_product,
+            'order_list' => $records
+        ];
+
+        return response()->json($data);
     }
 
     public function show($id){

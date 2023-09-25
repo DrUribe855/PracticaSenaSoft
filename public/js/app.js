@@ -2502,8 +2502,8 @@ __webpack_require__.r(__webpack_exports__);
       order_status: {},
       store_name: {},
       status: '',
-      store: '',
-      product_name: '',
+      store_id: '',
+      product_id: '',
       product: [],
       amount: '',
       total: '',
@@ -2581,18 +2581,20 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     register: function register() {
-      var store_name = this.store;
-      var product_name = this.product_name;
+      var _this3 = this;
+      var store_id = this.store_id;
+      var product_id = this.product_id;
       var amount = this.amount;
       var total = this.total;
-      axios.post('store', {
-        store_name: store_name,
-        product_name: product_name,
+      axios.post('/Order/store', {
+        store_id: store_id,
+        product_id: product_id,
         amount: amount,
         total: total
       }).then(function (res) {
         console.log("Respuesta del servidor");
         console.log(res.data);
+        _this3.order_list = res.data.order_list;
         $('#register').modal('hide');
       })["catch"](function (error) {
         console.log("Error en axios");
@@ -21461,8 +21463,8 @@ var render = function () {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.store,
-                                      expression: "store",
+                                      value: _vm.store_id,
+                                      expression: "store_id",
                                     },
                                   ],
                                   staticClass: "form-select",
@@ -21483,7 +21485,7 @@ var render = function () {
                                             "_value" in o ? o._value : o.value
                                           return val
                                         })
-                                      _vm.store = $event.target.multiple
+                                      _vm.store_id = $event.target.multiple
                                         ? $$selectedVal
                                         : $$selectedVal[0]
                                     },
@@ -21518,8 +21520,8 @@ var render = function () {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.product_name,
-                                      expression: "product_name",
+                                      value: _vm.product_id,
+                                      expression: "product_id",
                                     },
                                   ],
                                   staticClass: "form-select",
@@ -21540,7 +21542,7 @@ var render = function () {
                                             "_value" in o ? o._value : o.value
                                           return val
                                         })
-                                      _vm.product_name = $event.target.multiple
+                                      _vm.product_id = $event.target.multiple
                                         ? $$selectedVal
                                         : $$selectedVal[0]
                                     },
